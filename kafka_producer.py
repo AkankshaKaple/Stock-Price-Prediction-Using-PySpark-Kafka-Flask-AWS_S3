@@ -1,34 +1,3 @@
-# #    Spark
-# from pyspark import SparkContext
-# #    Spark Streaming
-# from pyspark.streaming import StreamingContext
-# #    Kafka
-# from pyspark.streaming.kafka import KafkaUtils
-# #    json parsing
-# import json
-#
-# sc = SparkContext(appName="PythonSparkStreamingKafka_RM_01")
-# sc.setLogLevel("WARN")
-#
-# ssc = StreamingContext(sc, 5)
-#
-# kafkaStream = KafkaUtils.createStream(ssc, 'cdh57-01-node-01.moffatt.me:2181'
-#                                       , 'spark-streaming', {'twitter':1})
-#
-# parsed = kafkaStream.map(lambda v: json.loads(v[1]))
-#
-# parsed.count().map(lambda x:'Tweets in this batch: %s' % x).pprint()
-#
-# authors_dstream = parsed.map(lambda tweet: tweet['user']['screen_name'])
-#
-# author_counts = authors_dstream.countByValue()
-# author_counts.pprint()
-#
-# author_counts_sorted_dstream = author_counts.transform(\
-#   (lambda foo:foo\
-#    .sortBy(lambda x:( -x[1]))))
-# author_counts_sorted_dstream.pprint()
-
 # Program to create producer
 from time import sleep
 from json import *
@@ -43,17 +12,10 @@ producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          dumps(x).encode('utf-8'))
 # Serializer ==> Encoding
 
-# Reading data directly
-# for e in range(1000):
-#     data = {'number' : e}
-#     producer.send('numtest_topic', value=data)
-#     sleep(5)
-
-
 # Reading data from website
 time = "5min"
 symbol = "MSFT"
-apikey = "PRM9UE7EI1OW53RQ"
+apikey = os.environ["API_KEY"]
 label = "Time Series ({})".format(time)
 topic = "numtest_topic_1"
 
